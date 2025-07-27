@@ -1,14 +1,25 @@
 {
   "name": "mcp-worker-ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "Distributed AI worker server using Model Context Protocol (MCP) that transforms clients into intelligent workers for processing prompts",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "docker:build": "docker build -t mcp-worker-ts ."
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "distributed",
+    "ai-worker",
+    "polling",
+    "typescript",
+    "claude",
+    "worker-pattern",
+    "task-queue",
+    "prompt-processing"
+  ],
+  "author": "Tomas <tmsdnl@users.noreply.github.com>",
   "license": "MIT",
   "packageManager": "pnpm@10.13.1",
   "dependencies": {
