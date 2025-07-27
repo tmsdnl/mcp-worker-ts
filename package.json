@@ -1,11 +1,11 @@
 {
-  "name": "mcp-polling-ts",
+  "name": "mcp-worker-ts",
   "version": "1.0.0",
   "description": "",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
-    "docker:build": "docker build -t mcp-polling-ts ."
+    "docker:build": "docker build -t mcp-worker-ts ."
   },
   "keywords": [],
   "author": "",
