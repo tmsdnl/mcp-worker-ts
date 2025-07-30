@@ -80,24 +80,20 @@ The server exposes three MCP tools:
 ### Build from Source
 
 ```bash
-# Install dependencies
-pnpm install
+# Full build (clean + install + TypeScript + Docker)
+make
 
-# Build TypeScript
-pnpm build
+# Or build individual components:
+make app-install   # Install dependencies
+make app-build     # Build TypeScript only
+make docker-build  # Build Docker image only
 
-# Test with MCP Inspector
-npx @modelcontextprotocol/inspector node ./dist/index.js --timeout=9
-```
+# Clean up
+make app-clean     # Remove build artifacts
+make docker-clean  # Stop and remove all mcp-worker-ts containers
 
-### Docker
-
-```bash
-# Build Docker image
-pnpm docker:build
-
-# Test with MCP Inspector
-npx @modelcontextprotocol/inspector docker run --rm -i mcp-worker-ts --timeout=9
+# View all available commands
+make help
 ```
 
 ## Claude Configuration
@@ -175,11 +171,8 @@ Once configured, interact with the server through Claude:
 
 ## Key Implementation Details
 
-- **Transport**: Uses STDIO transport for MCP communication
-- **Timeout**: Configurable polling delay (default: 59 seconds)
 - **Task Queue**: In-memory queue with automatic task generation every 20 seconds (no duplicate tasks)
 - **Queue Limit**: Maximum 3 tasks in queue to prevent overflow
-- **Worker Lifecycle**: Workers considered dead if they don't poll within timeout + 5 seconds
 - **Response Format**: Workers instructed to keep responses brief (2-3 sentences maximum)
 - **Sample Tasks**: Diverse AI prompts testing various capabilities:
   - Factual knowledge (geography, science)
@@ -189,10 +182,9 @@ Once configured, interact with the server through Claude:
   - Language translation (Spanish)
   - Web searches (weather, news, prices, trends)
   - Real-time information (current events, market data)
-- **Worker Lifecycle**: Workers automatically removed when inactive (timeout + 5 seconds)
-- **Polling Mechanism**: True polling - server waits for tasks to appear and delivers immediately
-- **Logging**: Task completions logged to stderr showing prompt and response
-- **Silent Operation**: All instructions explicitly prohibit user-facing output and tool chain breaks
+- **Polling Timeout**: Configurable delay between polls (default: 59 seconds)
+- **Worker Lifecycle**: Automatic cleanup of inactive workers after timeout + 5 seconds
+- **Container Safety**: Stdin closure detection ensures proper cleanup when client disconnects
 
 ## Customization
 

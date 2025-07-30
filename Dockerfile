@@ -15,4 +15,4 @@ RUN pnpm install --prod --frozen-lockfile
 COPY dist/ ./dist/
 
 # Run the application
-ENTRYPOINT ["node", "dist/index.js"]
+ENTRYPOINT ["node", "dist/server.js"]

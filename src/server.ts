@@ -320,6 +320,17 @@ async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
   console.error(`MCP Worker Server running on stdio with ${timeoutSeconds}s timeout`);
+  
+  // Handle stdin closure to exit gracefully when client disconnects
+  process.stdin.on('end', () => {
+    console.error('Stdin closed, shutting down server...');
+    process.exit(0);
+  });
+  
+  process.stdin.on('close', () => {
+    console.error('Stdin closed, shutting down server...');
+    process.exit(0);
+  });
 }
 
 main().catch((error) => {
